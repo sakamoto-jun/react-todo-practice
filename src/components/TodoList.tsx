@@ -3,7 +3,7 @@ import Checkbox from "./Checkbox";
 
 interface TodoListProps {
   todos: Todo[];
-  onToggleTodo: (id: number) => void;
+  onToggleTodo: (id: string) => void;
 }
 
 const TodoList = ({ todos, onToggleTodo }: TodoListProps) => {

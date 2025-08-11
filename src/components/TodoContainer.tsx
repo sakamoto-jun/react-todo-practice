@@ -1,32 +1,26 @@
-import { useCallback, useState } from "react";
-import { Todo } from "../types";
+import { useCallback, useEffect } from "react";
+import { useDispatch, useSelector } from "../hooks/useRedux";
+import { addTodo, fetchTodoRequest, toggleTodo } from "../store/todoSlice";
 import TodoInput from "./TodoInput";
 import TodoList from "./TodoList";
 
 export default function TodoContainer() {
-  const [todos, setTodos] = useState<Todo[]>([]);
+  const todos = useSelector((state) => state.todo.todos);
+  const dispatch = useDispatch();
 
-  const handleAddTodo = useCallback((text: string) => {
-    setTodos((prev) =>
-      prev.concat({
-        id: prev.length + 1,
-        text,
-        done: false,
-      })
-    );
-  }, []);
-  const handleToggleTodo = (id: number) => {
-    setTodos((prev) =>
-      prev.map((todo) => {
-        if (todo.id === id) {
-          return {
-            ...todo,
-            done: !todo.done,
-          };
-        }
-        return todo;
-      })
-    );
+  useEffect(() => {
+    dispatch(fetchTodoRequest());
+  }, [dispatch]);
+
+  const handleAddTodo = useCallback(
+    (text: string) => {
+      dispatch(addTodo(text));
+    },
+    [dispatch]
+  );
+
+  const handleToggleTodo = (id: string) => {
+    dispatch(toggleTodo(id));
   };
 
   console.log("TodoContainer 렌더링!");
