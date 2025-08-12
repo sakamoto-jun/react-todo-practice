@@ -1,39 +1,25 @@
-import { useCallback, useState } from "react";
-import { Todo } from "../types";
+import { observer } from "mobx-react-lite";
+import { useEffect } from "react";
+import { useStore } from "../contexts/StoreContext";
 import TodoInput from "./TodoInput";
 import TodoList from "./TodoList";
 
-export default function TodoContainer() {
-  const [todos, setTodos] = useState<Todo[]>([]);
+const TodoContainerBase = () => {
+  const { todos, addTodo, toggleTodo, fetchTodos } = useStore();
 
-  const handleAddTodo = useCallback((text: string) => {
-    setTodos((prev) =>
-      prev.concat({
-        id: prev.length + 1,
-        text,
-        done: false,
-      })
-    );
-  }, []);
-  const handleToggleTodo = (id: number) => {
-    setTodos((prev) =>
-      prev.map((todo) => {
-        if (todo.id === id) {
-          return {
-            ...todo,
-            done: !todo.done,
-          };
-        }
-        return todo;
-      })
-    );
-  };
+  useEffect(() => {
+    fetchTodos();
+  }, [fetchTodos]);
 
   console.log("TodoContainer 렌더링!");
   return (
     <div>
-      <TodoInput onAddTodo={handleAddTodo} />
-      <TodoList todos={todos} onToggleTodo={handleToggleTodo} />
+      <TodoInput onAddTodo={addTodo} />
+      <TodoList todos={todos} onToggleTodo={toggleTodo} />
     </div>
   );
-}
+};
+
+const TodoContainer = observer(TodoContainerBase);
+
+export default TodoContainer;
