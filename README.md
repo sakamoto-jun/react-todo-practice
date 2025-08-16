@@ -6,3 +6,4 @@
 
 - `dev/feat/redux`: ReduxToolkit을 사용한 Todo App 구현
 - `dev/feat/mobx`: MobX를 사용한 Todo App 구현
+- `dev/feat/zustand`: Zustand를 사용한 Todo App 구현
