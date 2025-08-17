@@ -1,39 +1,29 @@
-import { useCallback, useState } from "react";
-import { Todo } from "../types";
+import { useAtom, useSetAtom } from "jotai";
+import { useEffect } from "react";
+import {
+  addTodoAtom,
+  fetchTodosAtom,
+  todosAtom,
+  toggleTodoAtom,
+} from "../store";
 import TodoInput from "./TodoInput";
 import TodoList from "./TodoList";
 
 export default function TodoContainer() {
-  const [todos, setTodos] = useState<Todo[]>([]);
+  const [todos] = useAtom(todosAtom);
+  const addTodo = useSetAtom(addTodoAtom);
+  const toggleTodo = useSetAtom(toggleTodoAtom);
+  const fetchTodos = useSetAtom(fetchTodosAtom);
 
-  const handleAddTodo = useCallback((text: string) => {
-    setTodos((prev) =>
-      prev.concat({
-        id: prev.length + 1,
-        text,
-        done: false,
-      })
-    );
-  }, []);
-  const handleToggleTodo = (id: number) => {
-    setTodos((prev) =>
-      prev.map((todo) => {
-        if (todo.id === id) {
-          return {
-            ...todo,
-            done: !todo.done,
-          };
-        }
-        return todo;
-      })
-    );
-  };
+  useEffect(() => {
+    fetchTodos();
+  }, [fetchTodos]);
 
   console.log("TodoContainer 렌더링!");
   return (
     <div>
-      <TodoInput onAddTodo={handleAddTodo} />
-      <TodoList todos={todos} onToggleTodo={handleToggleTodo} />
+      <TodoInput onAddTodo={addTodo} />
+      <TodoList todos={todos} onToggleTodo={toggleTodo} />
     </div>
   );
 }
