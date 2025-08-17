@@ -36,7 +36,7 @@
    set((state) => ({ done: !state.done }));
    ```
 
-## 코드 예시
+## 📦 코드 예시
 
 ```ts
 // src/useStore.ts
