@@ -2,7 +2,7 @@
 
 1. 심플한 API
 
-   - atom으로 상태 선언, useAtom으로 읽기 & 쓰기 한 번에 처리.
+   - `atom`으로 상태 선언, `useAtom`으로 읽기 & 쓰기 한 번에 처리.
    - 불필요한 보일러플레이트 최소화 → 코드 직관적.
 
 2. 필요한 곳만 렌더링
@@ -16,7 +16,7 @@
    - 작은 단위 로컬 상태부터 전역 상태까지 확장 자유로움.
 
 4. React Hook 친화적
-   - useAtom, useAtomValue, useSetAtom 등 React 훅 스타일 API.
+   - `useAtom`, `useAtomValue`, `useSetAtom` 등 React 훅 스타일 API.
    - 기존 React 코드와 자연스럽게 섞어 쓰기 가능.
 
 ## Jotai 사용 예시
