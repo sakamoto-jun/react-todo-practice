@@ -19,7 +19,7 @@
    - `useAtom`, `useAtomValue`, `useSetAtom` 등 React 훅 스타일 API.
    - 기존 React 코드와 자연스럽게 섞어 쓰기 가능.
 
-## Jotai 사용 예시
+## 📦 코드 예시
 
 ```typescript
 // src/store.ts
