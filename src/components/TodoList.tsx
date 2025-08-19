@@ -1,26 +1,42 @@
+import { useDispatch, useSelector } from "../hooks/useRedux";
+import { toggleTodo } from "../store/todoSlice";
 import { Todo } from "../types";
 import Checkbox from "./Checkbox";
 
 interface TodoListProps {
-  todos: Todo[];
-  onToggleTodo: (id: string) => void;
+  filter?: "all" | "active" | "completed";
 }
 
-const TodoList = ({ todos, onToggleTodo }: TodoListProps) => {
+const TodoList = ({ filter }: TodoListProps) => {
+  const todos = useSelector((state) => state.todo.todos);
+  const dispatch = useDispatch();
+
+  const filteredTodos = filterTodos(todos, filter);
+
   return (
     <ul>
-      {todos.map((todo) => (
+      {filteredTodos.map((todo) => (
         <li key={todo.id}>
           <Checkbox
-            id={`todo-${todo.id}`}
+            id={todo.id}
             label={todo.text}
             checked={todo.done}
-            onChange={() => onToggleTodo(todo.id)}
+            onChange={() => dispatch(toggleTodo(todo.id))}
           />
         </li>
       ))}
     </ul>
   );
 };
+
+function filterTodos(todos: Todo[], filter: TodoListProps["filter"]) {
+  if (filter === "active") {
+    return todos.filter((todo) => !todo.done);
+  } else if (filter === "completed") {
+    return todos.filter((todo) => todo.done);
+  }
+
+  return todos;
+}
 
 export default TodoList;

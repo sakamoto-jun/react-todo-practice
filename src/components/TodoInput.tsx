@@ -4,15 +4,6 @@ interface TodoInputProps {
   onAddTodo: (text: string) => void;
 }
 
-// const generateLargeDataSet = (size: number) => {
-//   return Array.from({ length: size }, (_, i) => ({
-//     id: i + 1,
-//     text: `할 일 ${i + 1}`,
-//     done: i % 2 === 0,
-//   }));
-// };
-// const largeDataSet = generateLargeDataSet(10000);
-
 const TodoInput = ({ onAddTodo }: TodoInputProps) => {
   const [newTodo, setNewTodo] = useState<string>("");
 
@@ -25,11 +16,6 @@ const TodoInput = ({ onAddTodo }: TodoInputProps) => {
     onAddTodo(newTodo);
     setNewTodo("");
   };
-
-  // const filteredLargeDataSet = useMemo(() => {
-  //   console.log("Filtering Large Dataset...");
-  //   return largeDataSet.filter((todo) => todo.done);
-  // }, []);
 
   console.log("Todo Input 렌더링!");
   return (
