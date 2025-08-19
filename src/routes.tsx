@@ -16,12 +16,8 @@ const router = createBrowserRouter([
             element: <TodoList />,
           },
           {
-            path: "/active",
-            element: <TodoList filter="active" />,
-          },
-          {
-            path: "/completed",
-            element: <TodoList filter="completed" />,
+            path: "/:filterType",
+            element: <TodoList />,
           },
         ],
       },

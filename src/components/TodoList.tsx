@@ -1,17 +1,18 @@
+import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "../hooks/useRedux";
 import { toggleTodo } from "../store/todoSlice";
 import { Todo } from "../types";
 import Checkbox from "./Checkbox";
 
-interface TodoListProps {
-  filter?: "all" | "active" | "completed";
-}
-
-const TodoList = ({ filter }: TodoListProps) => {
-  const todos = useSelector((state) => state.todo.todos);
+const TodoList = () => {
+  const { filterType = "all" } = useParams<{
+    filterType?: "all" | "active" | "completed";
+  }>();
+  const filteredTodos = useSelector((state) => {
+    const filteredTodos = filterTodos(state.todo.todos, filterType);
+    return filteredTodos;
+  });
   const dispatch = useDispatch();
-
-  const filteredTodos = filterTodos(todos, filter);
 
   return (
     <ul>
@@ -29,13 +30,12 @@ const TodoList = ({ filter }: TodoListProps) => {
   );
 };
 
-function filterTodos(todos: Todo[], filter: TodoListProps["filter"]) {
+function filterTodos(todos: Todo[], filter: "all" | "active" | "completed") {
   if (filter === "active") {
     return todos.filter((todo) => !todo.done);
   } else if (filter === "completed") {
     return todos.filter((todo) => todo.done);
   }
-
   return todos;
 }
 
