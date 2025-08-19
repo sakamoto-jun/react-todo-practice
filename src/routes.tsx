@@ -1,7 +1,11 @@
+import { lazy, Suspense } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
-import TodoContainer from "./components/TodoContainer/TodoContainer";
-import TodoList from "./components/TodoList";
+
+const LazyTodoContainer = lazy(
+  () => import("./components/TodoContainer/TodoContainer")
+);
+const LazyTodoList = lazy(() => import("./components/TodoList"));
 
 const router = createBrowserRouter([
   {
@@ -9,15 +13,27 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <TodoContainer />,
+        element: (
+          <Suspense fallback={<div>loading...</div>}>
+            <LazyTodoContainer />
+          </Suspense>
+        ),
         children: [
           {
             index: true,
-            element: <TodoList />,
+            element: (
+              <Suspense fallback={<div>loading...</div>}>
+                <LazyTodoList />
+              </Suspense>
+            ),
           },
           {
             path: "/:filterType",
-            element: <TodoList />,
+            element: (
+              <Suspense fallback={<div>loading...</div>}>
+                <LazyTodoList />
+              </Suspense>
+            ),
           },
         ],
       },
