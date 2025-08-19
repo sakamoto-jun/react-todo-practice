@@ -2,9 +2,6 @@ import { lazy, Suspense } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 
-const LazyTodoContainer = lazy(
-  () => import("./components/TodoContainer/TodoContainer")
-);
 const LazyTodoList = lazy(() => import("./components/TodoList"));
 
 const router = createBrowserRouter([
@@ -13,11 +10,12 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: (
-          <Suspense fallback={<div>loading...</div>}>
-            <LazyTodoContainer />
-          </Suspense>
-        ),
+        lazy: async () => {
+          const { default: TodoContainer } = await import(
+            "./components/TodoContainer/TodoContainer"
+          );
+          return { Component: TodoContainer };
+        },
         children: [
           {
             index: true,
