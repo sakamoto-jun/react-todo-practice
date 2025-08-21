@@ -1,6 +1,8 @@
 import { lazy, Suspense } from "react";
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, redirect } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
+import Login from "./components/Login";
+import { getUser } from "./services/userApi";
 
 const LazyTodoList = lazy(() => import("./components/TodoList"));
 
@@ -38,6 +40,22 @@ const router = createBrowserRouter([
       {
         path: "/about",
         element: <div>About</div>,
+      },
+      {
+        path: "/protected",
+        loader: async () => {
+          try {
+            const user = await getUser();
+            return { user };
+          } catch {
+            return redirect("/login");
+          }
+        },
+        element: <div>Protected</div>,
+      },
+      {
+        path: "/login",
+        element: <Login />,
       },
     ],
   },
