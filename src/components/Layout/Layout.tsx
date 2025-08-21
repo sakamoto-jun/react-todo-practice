@@ -1,9 +1,11 @@
 import { Link, Outlet } from "react-router-dom";
+import useStore from "../../useStore";
 import "./Layout.css";
 
 export default function Layout() {
-  console.log("Layout 렌더링!");
+  const user = useStore((state) => state.user);
 
+  console.log("Layout 렌더링!");
   return (
     <div className="layout__container">
       <div className="layout__gnb">
@@ -15,6 +17,15 @@ export default function Layout() {
           <Link className="layout__link" to="/about">
             About
           </Link>
+          {user ? (
+            <Link className="layout__link" to="/protected">
+              {user.username}
+            </Link>
+          ) : (
+            <Link className="layout__link" to="/login">
+              Login
+            </Link>
+          )}
         </div>
       </div>
       <Outlet />

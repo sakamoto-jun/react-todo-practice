@@ -1,16 +1,25 @@
 import { create } from "zustand";
 import { getTodos } from "./services/todoApi";
-import { Todo } from "./types";
+import { Todo, User } from "./types";
 
-interface TodoState {
+type State = {
+  user: User | null;
   todos: Todo[];
+};
+
+type Action = {
+  setUser: (user: User) => void;
   addTodo: (text: string) => void;
   toggleTodo: (id: number) => void;
   fetchTodos: () => Promise<void>;
-}
+};
 
-const useStore = create<TodoState>()((set) => ({
+const useStore = create<State & Action>()((set) => ({
+  user: null,
   todos: [],
+  setUser: (user) => {
+    set({ user });
+  },
   addTodo: (text) => {
     set((state) => ({
       todos: [...state.todos, { id: Date.now(), text, done: false }],
