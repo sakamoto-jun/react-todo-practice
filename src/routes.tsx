@@ -1,10 +1,19 @@
-import { lazy, Suspense } from "react";
-import { createBrowserRouter, redirect } from "react-router-dom";
+/* eslint-disable react-refresh/only-export-components */
+import { lazy, PropsWithChildren, Suspense } from "react";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import Login from "./components/Login";
-import { getUser } from "./services/userApi";
+import useStore from "./useStore";
 
 const LazyTodoList = lazy(() => import("./components/TodoList"));
+const ProtectedRoute = ({ children }: PropsWithChildren) => {
+  const user = useStore((state) => state.user);
+
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+  return children;
+};
 
 const router = createBrowserRouter([
   {
@@ -43,15 +52,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/protected",
-        loader: async () => {
-          try {
-            const user = await getUser();
-            return { user };
-          } catch {
-            return redirect("/login");
-          }
-        },
-        element: <div>Protected</div>,
+        element: (
+          <ProtectedRoute>
+            <div>Protected</div>
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/login",
