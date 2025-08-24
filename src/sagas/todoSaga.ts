@@ -1,5 +1,6 @@
-import { call, put, takeLeading } from "redux-saga/effects";
+import { call, put, select, takeLeading } from "redux-saga/effects";
 import { getTodos } from "../services/todoApi";
+import { RootState } from "../store";
 import {
   fetchTodoFailure,
   fetchTodoRequest,
@@ -9,8 +10,13 @@ import { Todo } from "../types";
 
 function* fetchTodoSaga() {
   try {
-    const todos: Todo[] = yield call(getTodos);
-    yield put(fetchTodoSuccess({ todos }));
+    const status: RootState["todo"]["status"] = yield select(
+      (state: RootState) => state.todo.status
+    );
+    if (status !== "succeeded") {
+      const todos: Todo[] = yield call(getTodos);
+      yield put(fetchTodoSuccess({ todos }));
+    }
   } catch (error) {
     if (error instanceof Error) {
       yield put(fetchTodoFailure({ error: error.message }));

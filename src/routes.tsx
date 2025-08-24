@@ -3,11 +3,11 @@ import { lazy, PropsWithChildren, Suspense } from "react";
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import Login from "./components/Login";
-import useStore from "./useStore";
+import { useSelector } from "./hooks/useRedux";
 
 const LazyTodoList = lazy(() => import("./components/TodoList"));
 const ProtectedRoute = ({ children }: PropsWithChildren) => {
-  const user = useStore((state) => state.user);
+  const user = useSelector((state) => state.common.user);
 
   if (!user) {
     return <Navigate to="/login" replace />;

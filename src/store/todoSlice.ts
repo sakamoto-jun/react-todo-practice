@@ -3,7 +3,7 @@ import { Todo } from "../types";
 
 interface TodoState {
   todos: Todo[];
-  status: "idle" | "loading" | "failed" | "succeeded";
+  status: "idle" | "failed" | "succeeded";
   error: string | null;
 }
 
@@ -38,16 +38,16 @@ const todoSlice = createSlice({
 
       if (matchTodo) matchTodo.done = !matchTodo.done;
     },
-    fetchTodoRequest: (state) => {
-      state.status = "loading";
+    fetchTodoRequest: () => {
+      // todoSaga에서 미들웨어 처리
     },
     fetchTodoSuccess: (state, action: PayloadAction<{ todos: Todo[] }>) => {
       state.todos = action.payload.todos;
       state.status = "succeeded";
     },
     fetchTodoFailure: (state, action: PayloadAction<{ error: string }>) => {
-      state.status = "failed";
       state.error = action.payload.error;
+      state.status = "failed";
     },
   },
 });
