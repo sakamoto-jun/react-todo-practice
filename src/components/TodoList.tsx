@@ -1,17 +1,19 @@
-import { useParams } from "react-router-dom";
+import { useMemo } from "react";
+import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "../hooks/useRedux";
 import { toggleTodo } from "../store/todoSlice";
 import { Todo } from "../types";
 import Checkbox from "./Checkbox";
 
 const TodoList = () => {
-  const { filterType = "all" } = useParams<{
-    filterType?: "all" | "active" | "completed";
-  }>();
-  const filteredTodos = useSelector((state) => {
-    const filteredTodos = filterTodos(state.todo.todos, filterType);
-    return filteredTodos;
-  });
+  const location = useLocation();
+  const filterType = location.state?.filterType ?? "all";
+
+  const todos = useSelector((state) => state.todo.todos);
+  const filteredTodos = useMemo(
+    () => filterTodos(todos, filterType),
+    [todos, filterType]
+  );
   const dispatch = useDispatch();
 
   return (

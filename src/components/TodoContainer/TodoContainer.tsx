@@ -29,6 +29,8 @@ export default function TodoContainer() {
             `${isActive && "todo-container__link--active"} todo-container__link`
           }
           to="/"
+          state={{ filterType: "all" }}
+          replace
         >
           all
         </NavLink>
@@ -36,7 +38,9 @@ export default function TodoContainer() {
           className={({ isActive }) =>
             `${isActive && "todo-container__link--active"} todo-container__link`
           }
-          to="/active"
+          to="/"
+          state={{ filterType: "active" }}
+          replace
         >
           active
         </NavLink>
@@ -44,7 +48,9 @@ export default function TodoContainer() {
           className={({ isActive }) =>
             `${isActive && "todo-container__link--active"} todo-container__link`
           }
-          to="/completed"
+          to="/"
+          state={{ filterType: "completed" }}
+          replace
         >
           completed
         </NavLink>
