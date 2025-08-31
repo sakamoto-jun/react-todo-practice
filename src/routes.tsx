@@ -3,6 +3,7 @@ import { lazy, PropsWithChildren, Suspense } from "react";
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import Login from "./components/Login";
+import ProductTable from "./components/ProductTable";
 import TodoListWithQuery from "./components/TodoListWithQuery";
 import { useSelector } from "./hooks/useRedux";
 
@@ -77,6 +78,10 @@ const router = createBrowserRouter([
             element: <TodoListWithQuery />,
           },
         ],
+      },
+      {
+        path: "/products",
+        element: <ProductTable />,
       },
     ],
   },
