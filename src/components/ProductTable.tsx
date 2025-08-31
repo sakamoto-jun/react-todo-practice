@@ -58,7 +58,7 @@ const ProductTable = () => {
                     style={
                       header.column.getCanSort() ? { cursor: "pointer" } : {}
                     }
-                    onClick={header.column.getToggleSortingHandler()}
+                    onClick={header.column.getToggleSortingHandler()} // `header.column.getToggleSortingHandler()` 전체 컬럼 정렬
                   >
                     {header.isPlaceholder
                       ? null
@@ -140,7 +140,7 @@ const columns = [
   }),
   columnHelper.accessor("title", {
     header: (table) => (
-      <div onClick={() => table.column.toggleSorting()}>Title</div>
+      <div onClick={() => table.column.toggleSorting()}>Title</div> // `() => table.column.toggleSorting()` 개별 컬럼 정렬
     ),
     cell: (info) => info.getValue(),
   }),
