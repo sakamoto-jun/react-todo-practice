@@ -1,6 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { lazy, PropsWithChildren, Suspense } from "react";
 import { createBrowserRouter, Navigate } from "react-router-dom";
+import AnimationWrapper from "./components/AnimationWrapper";
 import Layout from "./components/Layout/Layout";
 import Login from "./components/Login";
 import ProductTable from "./components/ProductTable";
@@ -84,6 +85,10 @@ const router = createBrowserRouter([
         element: <ProductTable />,
       },
     ],
+  },
+  {
+    path: "/animation",
+    element: <AnimationWrapper />,
   },
 ]);
 
