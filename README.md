@@ -10,7 +10,7 @@
 
 > ✅ 각 브랜치별로 `README.md`에 특징과 간단한 예시를 작성하였습니다.
 
-- `dev/feat/redux`: **ReduxToolkit**을 사용한 Todo App 구현 + **TanStack Query** + **TanStack Table**
+- `dev/feat/redux`: **ReduxToolkit**을 사용한 Todo App 구현 + **TanStack Query** + **TanStack Table** + **GSAP** + **Storybook**
 - `dev/feat/mobx`: **MobX**를 사용한 Todo App 구현
 - `dev/feat/zustand`: **Zustand**를 사용한 Todo App 구현
 - `dev/feat/jotai`: **Jotai**를 사용한 Todo App 구현
